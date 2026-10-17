@@ -1,0 +1,63 @@
+openapi: 3.0.0
+info:
+  title: Public API
+  version: 1.0.0
+  description: This is the public API documentation.
+servers:
+  - url: http://localhost:3000
+paths:
+  /students/get_classes/get_all_test_answers:
+    get:
+      summary: "Get all test answers. Example: /students/get_classes/get_all_test_answers?class_name=SWE%204633"
+      parameters:
+        - name: class_name
+          in: query
+          required: true
+          description: The name of the class for which to retrieve test answers.
+          schema:
+            type: string
+            example: "SWE 4633"
+      responses:
+        '200':
+          description: Secret test answers retrieved successfully for upcoming final.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: The question number.
+                      example: 1
+                    answer:
+                      type: string
+                      description: The answer to the question.
+                      example: "CDN means Content Delivery Network"
+  /students/get_classes/erase_tracks:
+    post:
+      summary: "Erase all tracks. Example: POST /students/get_classes/erase_tracks with body {\"admin_key\": \"abc123\"}"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                admin_key:
+                  type: string
+                  description: Secret key proving the caller is an admin
+                  example: abc123
+      responses:
+        '200':
+          description: All tracks erased successfully, professor will never know...
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: True if the logs were erased
+                    example: true
